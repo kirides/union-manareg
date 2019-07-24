@@ -63,9 +63,6 @@
     <ClCompile Include="DllMain.cpp">
       <Filter>Plugin</Filter>
     </ClCompile>
-    <ClCompile Include="ManaReg.cpp">
-      <Filter>Plugin</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ZenGin\Gothic_I_Addon\API\oAiHuman.h">

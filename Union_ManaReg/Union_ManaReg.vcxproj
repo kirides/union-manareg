@@ -394,7 +394,6 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="DllMain.cpp" />
-    <ClCompile Include="ManaReg.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\classDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\staticDef_Ver3.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Classic\classDef_Ver2.cpp" />
