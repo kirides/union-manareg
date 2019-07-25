@@ -338,3 +338,14 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Union_ManaReg/G2A Debug
+/Union_ManaReg/G2A Release
+
+/Union_ManaReg/G2 Debug
+/Union_ManaReg/G2 Release
+
+/Union_ManaReg/G1A Debug
+/Union_ManaReg/G1A Release
+
+/Union_ManaReg/G1 Debug
+/Union_ManaReg/G1 Release

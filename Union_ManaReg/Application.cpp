@@ -17,33 +17,51 @@
 #define PLUGIN_NAMESPACE Gothic_I_Addon
 #include "ManaReg.h"
 #endif
+// Define Functionpointer fields that store the apropriate functioncalls.
+static void (*loop_fn)();
+static void (*settings_fn)();
 
 void Game_Entry() {
 }
 
 void Game_Init() {
+	TEngineVersion engineVersion = Union.GetEngineVersion();
+	switch (engineVersion)
+	{
+#ifdef __G1
+		case UnionCore::Engine_G1:
+			loop_fn = &Gothic_I_Classic::RegeneratePlayerMana_Loop;
+			settings_fn = &Gothic_I_Classic::RegeneratePlayerMana_LoadSettings;
+			break;
+#endif
+#ifdef __G1
+		case UnionCore::Engine_G1A:
+			loop_fn = &Gothic_I_Addon::RegeneratePlayerMana_Loop;
+			settings_fn = &Gothic_I_Addon::RegeneratePlayerMana_LoadSettings;
+			break;
+#endif
+#ifdef __G2
+		case UnionCore::Engine_G2:
+			loop_fn = &Gothic_II_Classic::RegeneratePlayerMana_Loop;
+			settings_fn = &Gothic_II_Classic::RegeneratePlayerMana_LoadSettings;
+			break;
+#endif
+#ifdef __G2A
+		case UnionCore::Engine_G2A:
+			loop_fn = Gothic_II_Addon::RegeneratePlayerMana_Loop;
+			settings_fn = &Gothic_II_Addon::RegeneratePlayerMana_LoadSettings;
+			break;
+#endif
+	}
+
+	settings_fn();
 }
 
 void Game_Exit() {
 }
 
 void Game_Loop() {
-	TEngineVersion engineVersion = Union.GetEngineVersion();
-	switch (engineVersion)
-	{
-		case UnionCore::Engine_G1:
-			Gothic_I_Classic::RegeneratePlayerMana_Loop();
-			break;
-		case UnionCore::Engine_G1A:
-			Gothic_I_Addon::RegeneratePlayerMana_Loop();
-			break;
-		case UnionCore::Engine_G2:
-			Gothic_II_Classic::RegeneratePlayerMana_Loop();
-			break;
-		case UnionCore::Engine_G2A:
-			Gothic_II_Addon::RegeneratePlayerMana_Loop();
-			break;
-	}
+	loop_fn();
 }
 
 void Game_SaveBegin() {
