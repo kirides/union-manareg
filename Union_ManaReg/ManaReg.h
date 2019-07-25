@@ -1,31 +1,34 @@
 #ifdef PLUGIN_NAMESPACE
+#ifdef HOOK_oCNpc__ProcessNpc
 #include "UnionAfx.h"
 #include <Windows.h>
 
 namespace PLUGIN_NAMESPACE {
-	extern void RegeneratePlayerMana_Loop();
-	extern void RegeneratePlayerMana_LoadSettings();
-
 	static int g_regRate = 2;
 	static float g_regTickRate = 2000.0f;
 
-	void RegeneratePlayerMana_Loop() {
+	extern void RegeneratePlayerMana_LoadSettings();
+
+	void __fastcall RegeneratePlayerMana_ProcessNpc(oCNpc* _this);
+	CInvoke<void(__fastcall *)(oCNpc * _this)> Ivk_oCNpc__ProcessNpc(HOOK_oCNpc__ProcessNpc, &RegeneratePlayerMana_ProcessNpc);
+
+	void __fastcall RegeneratePlayerMana_ProcessNpc(oCNpc* _this) {
 		static CTimer TimerAI;
 		static const uint RegenManaID = 1;
 
-		auto p = player;
-		if (p) {
+		if (_this == player) {
 			TimerAI.Suspend(RegenManaID, ogame->singleStep);
-			if (p->attribute[NPC_ATR_MANA] < p->attribute[NPC_ATR_MANAMAX]) {
-				int menge; menge = (p->attribute[NPC_ATR_MANAMAX] * g_regRate) / 100;
+			if (_this->attribute[NPC_ATR_MANA] < _this->attribute[NPC_ATR_MANAMAX]) {
+				int menge; menge = (_this->attribute[NPC_ATR_MANAMAX] * g_regRate) / 100;
 
 				int ManaIntensity = (g_regTickRate / max(menge, 1));
 				if (TimerAI(RegenManaID, ManaIntensity)) {
-					p->attribute[NPC_ATR_MANA]++;
+					_this->attribute[NPC_ATR_MANA]++;
 				}
 			}
 			TimerAI.Attach();
 		}
+		Ivk_oCNpc__ProcessNpc(_this);
 	}
 
 	void RegeneratePlayerMana_LoadSettings() {
@@ -39,4 +42,5 @@ namespace PLUGIN_NAMESPACE {
 		g_regTickRate = GetPrivateProfileInt("UNION_MANAREG", "iTICKRATE", 2000, ini.c_str());
 	}
 }
+#endif
 #endif
