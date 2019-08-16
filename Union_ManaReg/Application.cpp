@@ -11,12 +11,12 @@
 #include "ManaReg.h"
 #endif
 #ifdef __G1A
-#define PLUGIN_NAMESPACE Gothic_I_Classic
+#define PLUGIN_NAMESPACE Gothic_I_Addon
 #define HOOK_oCNpc__ProcessNpc 0x006CCE00
 #include "ManaReg.h"
 #endif
 #ifdef __G1
-#define PLUGIN_NAMESPACE Gothic_I_Addon
+#define PLUGIN_NAMESPACE Gothic_I_Classic
 #define HOOK_oCNpc__ProcessNpc 0x0069AE50
 #include "ManaReg.h"
 #endif
